@@ -11,19 +11,17 @@ pipeline {
         }
         }
         stage('Pushing image to ACR') {
+            when { branch "master" } 
             steps{
                     script {
-                        if (GIT_BRANCH == "origin/master"){
+                        
                             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
                                         sh 'docker login openhack58u7acr.azurecr.io'
                                         sh 'docker tag user-java:$BUILD_NUMBER openhack58u7acr.azurecr.io/user-java:$BUILD_NUMBER'
                                         sh 'docker push openhack58u7acr.azurecr.io/user-java:$BUILD_NUMBER'
                                }
-                        }
-                        else{
-                            echo "skip"
-                        }
+                       
                        
                         
                     }     
