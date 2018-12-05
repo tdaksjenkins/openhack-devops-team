@@ -1,8 +1,22 @@
 pipeline {
 
     agent any
-
+    tools {
+        maven 'mvn'
+    }
     stages {
+        stage('unit test: user-java'){
+            steps{
+                script{
+                    withMaven(                   
+                        maven: mvn,
+                    ) {                
+                        sh 'mvn -f apis/user-java/pom.xml test'
+                    } 
+
+                }
+            }
+        }
         stage('Building image') {
             steps{
                 script {
