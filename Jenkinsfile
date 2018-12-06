@@ -13,12 +13,12 @@ pipeline {
                     DATE = new Date().format("YYYYMMddHHmmss", TimeZone.getTimeZone('America/Toronto'))
                     USER_JAVA_NAME = 'user-java'
                     USER_PROFILE = 'userprofile'
+                    GIT_ISSUE_API = 'https://api.github.com/repos/tdaksjenkins/openhack-devops-team/issues'
                     echo ACR_URL 
                     echo DATE
                     echo USER_JAVA_NAME
                     echo USER_PROFILE
                     
-
                     
                 }
             }
@@ -113,7 +113,23 @@ pipeline {
         }
     }
       
-    
+    post{
+        failure {           
+            script{
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GIT-ISSUE-TOKEN',
+                               usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN']]) { 
+                                    def title = "bug-${JOB_NAME}-${BUILD_NUMBER}"
+                                    def body = "fix the bug"  
+                                    def cmd = "curl -X POST -u ${GIT_USER}:${GIT_TOKEN} ${GIT_ISSUE_API} --data '{\"title\": \"${title}\", \"body\":\"${body}\"}'"
+                                    echo cmd
+                                    sh cmd                         
+                                    //curl -X POST -u "allen1990zuo":"0910b6e6d5c64e3624d4ec056fdbd257a71ad49a" https://api.github.com/repos/tdaksjenkins/openhack-devops-team/issues --data '{"title":"BUG", "body":"problem"}'
+                               }
+
+                
+            }           
+        }
+    }
   
 }
 
@@ -121,3 +137,4 @@ def ACR_URL
 def DATE
 def USER_JAVA_NAME
 def USER_PROFILE
+def GIT_ISSUE_API
