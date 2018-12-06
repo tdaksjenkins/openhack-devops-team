@@ -41,6 +41,7 @@ pipeline {
                     nodejs(nodeJSInstallationName: 'node8') {
                         sh 'npm install --prefix apis/userprofile'
                         sh 'npm run test --prefix apis/userprofile'
+                        
                     }
 
                 }
