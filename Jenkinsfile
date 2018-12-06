@@ -119,7 +119,7 @@ pipeline {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GIT-ISSUE-TOKEN',
                                usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN']]) { 
                                     def title = "bug-${JOB_NAME}-${BUILD_NUMBER}"
-                                    def body = "fix Tthe bug"  
+                                    def body = "fix the bug"  
                                     def cmd = "curl -X POST -u ${GIT_USER}:${GIT_TOKEN} ${GIT_ISSUE_API} --data '{\"title\": \"${title}\", \"body\":\"${body}\"}'"
                                     echo cmd
                                     sh cmd                         
