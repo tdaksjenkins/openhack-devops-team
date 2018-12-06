@@ -30,7 +30,7 @@ pipeline {
         stage('Building image') {
             steps{
                 script {
-                        sh 'docker build "apis/user-java/" -t user-java:$BUILD_NUMBER'
+                        sh 'docker build "apis/user-java/" -t user-java:$DATE'
             }
         }
         }
@@ -42,8 +42,8 @@ pipeline {
                             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
                                         sh 'docker login openhack58u7acr.azurecr.io'
-                                        sh 'docker tag user-java:$BUILD_NUMBER openhack58u7acr.azurecr.io/user-java:$BUILD_NUMBER'
-                                        sh 'docker push openhack58u7acr.azurecr.io/user-java:$BUILD_NUMBER'
+                                        sh 'docker tag user-java:$DATE openhack58u7acr.azurecr.io/user-java:$DATE'
+                                        sh 'docker push openhack58u7acr.azurecr.io/user-java:$DATE'
                                }
                        
                        
