@@ -79,7 +79,7 @@ pipeline {
                                         echo docker_push_cmd
                                         sh docker_login_cmd
                                         sh docker_tag_cmd
-                                        sh docker_login_cmd
+                                        sh docker_push_cmd
                                }
                        
                        
@@ -102,7 +102,7 @@ pipeline {
                                         echo docker_push_cmd
                                         sh docker_login_cmd
                                         sh docker_tag_cmd
-                                        sh docker_login_cmd
+                                        sh docker_push_cmd
                                }
                        
                        
