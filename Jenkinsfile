@@ -71,15 +71,15 @@ pipeline {
                         
                             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
-                                        def docker_login_cmd = "docker login ${ACR_URL}" 
-                                        def docker_tag_cmd = "docker tag ${USER_JAVA_NAME}:${DATE} ${ACR_URL}/${USER_JAVA_NAME}:${DATE}"
-                                        def docker_push_cmd = "docker push ${ACR_URL}/${USER_JAVA_NAME}:${DATE}"
-                                        echo docker_login_cmd
-                                        echo docker_tag_cmd
-                                        echo docker_push_cmd
-                                        sh docker_login_cmd
-                                        sh docker_tag_cmd
-                                        sh docker_push_cmd
+                                    def docker_login_cmd = "docker login ${ACR_URL}" 
+                                    def docker_tag_cmd = "docker tag ${USER_JAVA_NAME}:${DATE} ${ACR_URL}/${USER_JAVA_NAME}:${DATE}"
+                                    def docker_push_cmd = "docker push ${ACR_URL}/${USER_JAVA_NAME}:${DATE}"
+                                    echo docker_login_cmd
+                                    echo docker_tag_cmd
+                                    echo docker_push_cmd
+                                    sh docker_login_cmd
+                                    sh docker_tag_cmd
+                                    sh docker_push_cmd
                                }
                        
                        
@@ -94,15 +94,15 @@ pipeline {
                         
                             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
-                                        def docker_login_cmd = "docker login ${ACR_URL}" 
-                                        def docker_tag_cmd = "docker tag ${USER_PROFILE}:${DATE} ${ACR_URL}/${USER_PROFILE}:${DATE}"
-                                        def docker_push_cmd = "docker push ${ACR_URL}/${USER_PROFILE}:${DATE}"
-                                        echo docker_login_cmd
-                                        echo docker_tag_cmd
-                                        echo docker_push_cmd
-                                        sh docker_login_cmd
-                                        sh docker_tag_cmd
-                                        sh docker_push_cmd
+                                    def docker_login_cmd = "docker login ${ACR_URL}" 
+                                    def docker_tag_cmd = "docker tag ${USER_PROFILE}:${DATE} ${ACR_URL}/${USER_PROFILE}:${DATE}"
+                                    def docker_push_cmd = "docker push ${ACR_URL}/${USER_PROFILE}:${DATE}"
+                                    echo docker_login_cmd
+                                    echo docker_tag_cmd
+                                    echo docker_push_cmd
+                                    sh docker_login_cmd
+                                    sh docker_tag_cmd
+                                    sh docker_push_cmd
                                }
                        
                        
