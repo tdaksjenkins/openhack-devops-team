@@ -118,7 +118,9 @@ pipeline {
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
                             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
                                 sh 'helm init --client-only'
-                                sh 'helm upgrade api-user-java apis/user-java/helm'
+                                cmd ="helm upgrade api-user-java apis/user-java/helm --set-string repository.tag=${DATE}"
+                                echo cmd
+                                sh cmd
                                 
                             }
    
