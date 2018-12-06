@@ -5,6 +5,16 @@ pipeline {
         maven 'mvn'
     }
     stages {
+        stage('initial'){
+            steps{
+                script{
+                    ACR_URL = 'openhack58u7acr.azurecr.io'
+                    DATE = new Date().format("YYYY-MM-dd-HH:mm:ss", TimeZone.getTimeZone('America/Toronto'))
+                    echo ACR_URL
+                    echo DATE
+                }
+            }
+        }
         stage('unit test: user-java'){
             steps{
                 script{
@@ -46,3 +56,6 @@ pipeline {
     
   
 }
+
+def ACR_URL
+def DATE
