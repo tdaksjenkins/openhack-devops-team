@@ -9,9 +9,12 @@ pipeline {
             steps{
                 script{
                     ACR_URL = 'openhack58u7acr.azurecr.io'
-                    DATE = new Date().format("YYYY-MM-dd-HH:mm:ss", TimeZone.getTimeZone('America/Toronto'))
-                    echo ACR_URL
+                    DATE = new Date().format("YYYYMMddHHmmss", TimeZone.getTimeZone('America/Toronto'))
+                    USER_JAVA_NAME = 'user-java'
+                    echo ACR_URL 
                     echo DATE
+                    echo USER_JAVA_NAME
+                    
                 }
             }
         }
@@ -29,10 +32,12 @@ pipeline {
         }
         stage('Building image') {
             steps{
-                script {
-                        sh 'docker build "apis/user-java/" -t user-java:$DATE'
+                script {   
+                    def cmd = "docker build apis/user-java/ -t user-java:${DATE}"
+                    echo cmd
+                    sh cmd
+                }
             }
-        }
         }
         stage('Pushing image to ACR') {
             when { branch "master" } 
@@ -41,9 +46,15 @@ pipeline {
                         
                             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
                                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
-                                        sh 'docker login openhack58u7acr.azurecr.io'
-                                        sh 'docker tag user-java:$DATE openhack58u7acr.azurecr.io/user-java:$DATE'
-                                        sh 'docker push openhack58u7acr.azurecr.io/user-java:$DATE'
+                                        def docker_login_cmd = "docker login ${ACR_URL}" 
+                                        def docker_tag_cmd = "docker tag ${USER_JAVA_NAME}:${DATE} ${ACR_URL}/${USER_JAVA_NAME}:${DATE}"
+                                        def docker_push_cmd = "docker push ${ACR_URL}/${USER_JAVA_NAME}:${DATE}"
+                                        echo docker_login_cmd
+                                        echo docker_tag_cmd
+                                        echo docker_push_cmd
+                                        sh docker_login_cmd
+                                        sh docker_tag_cmd
+                                        sh docker_login_cmd
                                }
                        
                        
@@ -59,3 +70,4 @@ pipeline {
 
 def ACR_URL
 def DATE
+def USER_JAVA_NAME
