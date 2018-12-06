@@ -117,10 +117,10 @@ pipeline {
         failure {           
             script{
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GIT-ISSUE-TOKEN',
-                               usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) { 
+                               usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN']]) { 
                                     def title = "bug-${JOB_NAME}-${BUILD_NUMBER}"
                                     def body = "fix Tthe bug"  
-                                    def cmd = "curl -X POST -u ${USERNAME}:${PASSWORD} ${GIT_ISSUE_API} --data '{\"title\": \"${title}\", \"body\":\"${body}\"}'"
+                                    def cmd = "curl -X POST -u ${GIT_USER}:${GIT_TOKEN} ${GIT_ISSUE_API} --data '{\"title\": \"${title}\", \"body\":\"${body}\"}'"
                                     echo cmd
                                     sh cmd                         
                                     //curl -X POST -u "allen1990zuo":"0910b6e6d5c64e3624d4ec056fdbd257a71ad49a" https://api.github.com/repos/tdaksjenkins/openhack-devops-team/issues --data '{"title":"BUG", "body":"problem"}'
