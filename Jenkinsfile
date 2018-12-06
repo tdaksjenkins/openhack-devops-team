@@ -111,6 +111,20 @@ pipeline {
                     }     
             }
         }
+        stage('Deploy image to AKS: user-java'){
+            when { branch "master" } 
+            steps{
+                    script {
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'ACR_JENKINS',
+                            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {                            
+                                sh 'helm init --client-only'
+                                sh 'helm upgrade api-user-java apis/user-java/helm'
+                                
+                            }
+   
+                    }     
+            }
+        }
     }
       
     post{
@@ -119,7 +133,7 @@ pipeline {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GIT-ISSUE-TOKEN',
                                usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN']]) { 
                                     def title = "bug-${JOB_NAME}-${BUILD_NUMBER}"
-                                    def body = "fix the bug"  
+                                    def body = "Fix The bug"  
                                     def cmd = "curl -X POST -u ${GIT_USER}:${GIT_TOKEN} ${GIT_ISSUE_API} --data '{\"title\": \"${title}\", \"body\":\"${body}\"}'"
                                     echo cmd
                                     sh cmd                         
