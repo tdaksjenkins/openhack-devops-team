@@ -30,7 +30,7 @@ spec:
             httpHeaders:
             - name: Accept
               value: application/json
-          initialDelaySeconds: 10
+          initialDelaySeconds: 30
           periodSeconds: 30
         readinessProbe:
           httpGet:
@@ -39,8 +39,8 @@ spec:
             httpHeaders:
             - name: Accept
               value: application/json
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 15
+          periodSeconds: 3
         ports:
           - containerPort: {{ .Values.image.containerPort }}
             name: http
