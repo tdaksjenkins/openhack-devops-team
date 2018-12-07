@@ -135,6 +135,7 @@ pipeline {
         }
         stage("confirm roll back"){
             steps{
+                when { branch "master" }
                 script{
                     MESSAGE_ROLL_BACK = "Do you want to roll back to the previous version?"
                     echo MESSAGE_ROLL_BACK
