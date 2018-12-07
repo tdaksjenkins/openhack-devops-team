@@ -10,6 +10,7 @@ spec:
    type: RollingUpdate
    rollingUpdate:       
      maxUnavailable: {{ .Values.maxUnavailable }}
+     maxSurge: {{ .Values.maxSurge }}
   selector:
     matchLabels:
       app: {{ .Values.image.label }}
