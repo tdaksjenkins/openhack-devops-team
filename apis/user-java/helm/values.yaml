@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 2
+maxUnavailable: 0
 repository:
   image: openhack58u7acr.azurecr.io/user-java
   tag: latest
