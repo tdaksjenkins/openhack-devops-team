@@ -5,7 +5,9 @@ pipeline {
         maven 'mvn'
 
     }
+    
     stages {
+        
         stage('initial'){
             steps{
                 script{
@@ -18,11 +20,11 @@ pipeline {
                     echo DATE
                     echo USER_JAVA_NAME
                     echo USER_PROFILE
-                    
-                    
+                                       
                 }
             }
         }
+        
         stage('unit test: user-java'){
             steps{
                 script{
@@ -120,13 +122,42 @@ pipeline {
                                 sh 'helm init --client-only'
                                 cmd ="helm upgrade api-user-java apis/user-java/helm --set-string repository.tag=${DATE}"
                                 echo cmd
-                                sh cmd
+                                sh cmd 
+                                // def desired = sh(script: 'kubectl get deploy |grep -i ^user-java | awk -F " " \'{print $2}\'', returnStdout: true)
+                                // echo desired
+                                // def avaiable = sh(script: 'kubectl get deploy |grep -i ^user-java | awk -F " " \'{print $5}\'', returnStdout: true)
+                                // echo avaiable 
                                 
                             }
    
                     }     
             }
         }
+        stage("confirm roll back"){
+            steps{
+                script{
+                    MESSAGE_ROLL_BACK = "Do you want to roll back to the previous version?"
+                    echo MESSAGE_ROLL_BACK
+
+                    FLAG = input(
+                        id: 'confirm', message: 'Please confirm input values', parameters: [
+                        [$class: 'ChoiceParameterDefinition', choices: 'no\nyes', description: MESSAGE_ROLL_BACK, name: 'flag'],
+
+                    ])
+                    echo ("flag: "+ FLAG)
+                    if(FLAG =='no'){
+                        echo "skip roll back"
+                    }
+                    else{
+                        echo 'start roll back'
+                        sh 'helm rollback api-user-java 0'
+                        echo 'finish roll back'
+                    }
+                }
+                
+            }
+        }
+
     }
       
     post{
@@ -154,3 +185,5 @@ def DATE
 def USER_JAVA_NAME
 def USER_PROFILE
 def GIT_ISSUE_API
+def MESSAGE_ROLL_BACK
+def FLAG
