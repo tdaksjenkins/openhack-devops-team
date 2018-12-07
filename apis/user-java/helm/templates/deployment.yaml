@@ -30,8 +30,8 @@ spec:
             httpHeaders:
             - name: Accept
               value: application/json
-          initialDelaySeconds: 30
-          periodSeconds: 30
+          initialDelaySeconds: 3
+          periodSeconds: 3
         readinessProbe:
           httpGet:
             path: /api/healthcheck/user-java
@@ -39,8 +39,8 @@ spec:
             httpHeaders:
             - name: Accept
               value: application/json
-          initialDelaySeconds: 15
-          periodSeconds: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
         ports:
           - containerPort: {{ .Values.image.containerPort }}
             name: http
